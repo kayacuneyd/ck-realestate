@@ -31,6 +31,8 @@ class Property extends Entity
         'zip_code' => null,
         'status' => 'available',
         'featured' => false,
+        'type' => 'sale',
+        'main_image_url' => null,
         'images' => '[]',
         'created_at' => null,
         'updated_at' => null,
@@ -83,12 +85,20 @@ class Property extends Entity
      */
     public function getMainImage(): string
     {
-        $images = $this->images;
-        if (!empty($images) && isset($images[0])) {
-            return $images[0];
+        $mainImage = trim((string) ($this->attributes['main_image_url'] ?? ''));
+        if ($mainImage !== '' && !str_contains($mainImage, 'via.placeholder.com')) {
+            return $mainImage;
         }
 
-        return '/assets/images/property-placeholder.jpg';
+        $images = $this->images;
+        if (!empty($images) && isset($images[0])) {
+            $candidate = (string) $images[0];
+            if ($candidate !== '' && !str_contains($candidate, 'via.placeholder.com')) {
+                return $candidate;
+            }
+        }
+
+        return '/assets/images/placeholder-property.svg';
     }
 
     /**

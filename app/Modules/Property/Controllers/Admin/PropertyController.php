@@ -37,9 +37,28 @@ class PropertyController extends BaseController
      */
     public function index(): string
     {
+        $query = trim((string) $this->request->getGet('q'));
+        $status = (string) $this->request->getGet('status');
+
+        $builder = $this->propertyModel->builder()->orderBy('created_at', 'DESC');
+        if ($query !== '') {
+            $builder->groupStart()
+                ->like('title', $query)
+                ->orLike('city', $query)
+                ->orLike('description', $query)
+                ->groupEnd();
+        }
+        if ($status !== '') {
+            $builder->where('status', $status);
+        }
+
         $data = [
             'title' => lang('Property.admin.title'),
-            'properties' => $this->propertyModel->orderBy('created_at', 'DESC')->findAll(),
+            'properties' => $builder->get()->getResult($this->propertyModel->returnType),
+            'filters' => [
+                'q' => $query,
+                'status' => $status,
+            ],
         ];
 
         return view('App\Modules\Property\Views\admin\index', $data);

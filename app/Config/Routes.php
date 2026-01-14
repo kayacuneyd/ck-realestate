@@ -58,3 +58,9 @@ $routes->group('admin', ['filter' => 'auth'], function ($routes) {
 
 // Load Property Module routes
 require_once APPPATH . 'Modules/Property/Config/Routes.php';
+
+// Load Agent Module routes
+require_once APPPATH . 'Modules/Agent/Config/Routes.php';
+
+// Load Page Module routes
+require_once APPPATH . 'Modules/Page/Config/Routes.php';

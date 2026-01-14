@@ -77,10 +77,15 @@ class CreateProperties extends Migration
                 'type' => 'BOOLEAN',
                 'default' => false,
             ],
-            'images' => [
-                'type' => 'TEXT',
+            'type' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'default' => 'sale',
+            ],
+            'main_image_url' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
                 'null' => true,
-                'default' => '[]',
             ],
             'created_at' => [
                 'type' => 'DATETIME',

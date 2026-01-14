@@ -66,6 +66,8 @@ class PropertyModel extends Model
         'zip_code',
         'status',
         'featured',
+        'type',
+        'main_image_url',
         'images',
     ];
 

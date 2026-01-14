@@ -38,6 +38,13 @@ class PropertyController extends BaseController
     {
         $search = $this->request->getGet('q');
         $city = $this->request->getGet('city');
+        $minPrice = $this->request->getGet('min_price');
+        $maxPrice = $this->request->getGet('max_price');
+        $minBeds = $this->request->getGet('bedrooms');
+        $minBaths = $this->request->getGet('bathrooms');
+        $minArea = $this->request->getGet('min_area');
+        $maxArea = $this->request->getGet('max_area');
+        $type = $this->request->getGet('type');
 
         $builder = $this->propertyModel->where('status', 'available');
 
@@ -53,6 +60,29 @@ class PropertyController extends BaseController
         // Apply city filter
         if (!empty($city)) {
             $builder->where('city', $city);
+        }
+
+        if (!empty($type)) {
+            $builder->where('type', $type);
+        }
+
+        if (is_numeric($minPrice)) {
+            $builder->where('price >=', (float) $minPrice);
+        }
+        if (is_numeric($maxPrice)) {
+            $builder->where('price <=', (float) $maxPrice);
+        }
+        if (is_numeric($minBeds)) {
+            $builder->where('bedrooms >=', (int) $minBeds);
+        }
+        if (is_numeric($minBaths)) {
+            $builder->where('bathrooms >=', (int) $minBaths);
+        }
+        if (is_numeric($minArea)) {
+            $builder->where('area_sqm >=', (float) $minArea);
+        }
+        if (is_numeric($maxArea)) {
+            $builder->where('area_sqm <=', (float) $maxArea);
         }
 
         $properties = $builder->orderBy('featured', 'DESC')
@@ -72,6 +102,15 @@ class PropertyController extends BaseController
             'cities' => array_column($cities, 'city'),
             'search' => $search,
             'city' => $city,
+            'filters' => [
+                'min_price' => $minPrice,
+                'max_price' => $maxPrice,
+                'bedrooms' => $minBeds,
+                'bathrooms' => $minBaths,
+                'min_area' => $minArea,
+                'max_area' => $maxArea,
+                'type' => $type,
+            ],
         ];
 
         return view('App\Modules\Property\Views\frontend\index', $data);

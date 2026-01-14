@@ -2,126 +2,140 @@
 
 <?= $this->section('content') ?>
 
-<!-- Hero Section -->
-<div class="hero-section">
-    <div class="container position-relative">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="hero-title"><?= lang('Property.frontend.title') ?></h1>
-                <p class="hero-subtitle">
-                    <?= lang('Property.frontend.subtitle') ?? 'Finden Sie Ihre Traumimmobilie in Baden-Württemberg' ?>
-                </p>
-            </div>
-            <div class="col-lg-6">
-                <div class="d-flex gap-3 justify-content-lg-end mt-4 mt-lg-0">
-                    <div class="text-center px-4">
-                        <div class="fs-2 fw-bold"><?= count($properties ?? []) ?>+</div>
-                        <div class="small opacity-75">Immobilien</div>
-                    </div>
-                    <div class="border-start border-light opacity-25"></div>
-                    <div class="text-center px-4">
-                        <div class="fs-2 fw-bold"><?= count($cities ?? []) ?></div>
-                        <div class="small opacity-75">Städte</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<?= view('components/page_header', [
+    'title' => 'Our Properties',
+    'subtitle' => 'Browse listings and filter by what matters most.',
+]) ?>
 
-<div class="container">
-    <!-- Search Card -->
-    <div class="search-card animate-fadeInUp">
-        <form method="get" action="/properties">
-            <div class="row g-3 align-items-end">
-                <div class="col-lg-5">
-                    <label class="form-label text-muted small mb-2">
-                        <i class="bi bi-search me-1"></i> <?= lang('Property.frontend.search') ?>
-                    </label>
-                    <input type="text" class="form-control form-control-lg" name="q"
-                        placeholder="<?= lang('Property.frontend.search_placeholder') ?>"
-                        value="<?= esc($search ?? '') ?>">
+<div class="container py-5">
+
+    <!-- Filter/Search Bar -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="get" action="/properties">
+                <?php
+                $hasAdvanced = !empty($filters['min_price'] ?? '')
+                    || !empty($filters['max_price'] ?? '')
+                    || !empty($filters['bedrooms'] ?? '')
+                    || !empty($filters['bathrooms'] ?? '')
+                    || !empty($filters['min_area'] ?? '')
+                    || !empty($filters['max_area'] ?? '')
+                    || !empty($filters['type'] ?? '');
+                ?>
+                <div class="row g-3 align-items-end">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="q" placeholder="Search by keyword, address..."
+                            value="<?= esc($search ?? '') ?>">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" name="city">
+                            <option value="">All Cities</option>
+                            <?php foreach ($cities ?? [] as $c): ?>
+                                <option value="<?= esc($c) ?>" <?= ($city ?? '') === $c ? 'selected' : '' ?>>
+                                    <?= esc($c) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-3 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1">Search</button>
+                        <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#advancedFilters" aria-expanded="<?= $hasAdvanced ? 'true' : 'false' ?>"
+                            aria-controls="advancedFilters">
+                            Advanced
+                        </button>
+                    </div>
                 </div>
-                <div class="col-lg-4">
-                    <label class="form-label text-muted small mb-2">
-                        <i class="bi bi-geo-alt me-1"></i> <?= lang('Property.frontend.city') ?>
-                    </label>
-                    <select class="form-select form-select-lg" name="city">
-                        <option value=""><?= lang('Property.frontend.all_cities') ?></option>
-                        <?php foreach ($cities ?? [] as $c): ?>
-                            <option value="<?= esc($c) ?>" <?= ($city ?? '') === $c ? 'selected' : '' ?>>
-                                <?= esc($c) ?>
-                            </option>
-                        <?php endforeach; ?>
-                    </select>
+
+                <div class="collapse mt-3 <?= $hasAdvanced ? 'show' : '' ?>" id="advancedFilters">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Min Price</label>
+                            <input type="number" class="form-control" name="min_price" placeholder="0"
+                                value="<?= esc($filters['min_price'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Max Price</label>
+                            <input type="number" class="form-control" name="max_price" placeholder="500000"
+                                value="<?= esc($filters['max_price'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Beds</label>
+                            <input type="number" class="form-control" name="bedrooms" min="0"
+                                value="<?= esc($filters['bedrooms'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Baths</label>
+                            <input type="number" class="form-control" name="bathrooms" min="0"
+                                value="<?= esc($filters['bathrooms'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Type</label>
+                            <select class="form-select" name="type">
+                                <option value="">Any</option>
+                                <option value="sale" <?= ($filters['type'] ?? '') === 'sale' ? 'selected' : '' ?>>Sale</option>
+                                <option value="rent" <?= ($filters['type'] ?? '') === 'rent' ? 'selected' : '' ?>>Rent</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Min Area (sqm)</label>
+                            <input type="number" class="form-control" name="min_area" min="0"
+                                value="<?= esc($filters['min_area'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted">Max Area (sqm)</label>
+                            <input type="number" class="form-control" name="max_area" min="0"
+                                value="<?= esc($filters['max_area'] ?? '') ?>">
+                        </div>
+                        <div class="col-md-6 d-flex align-items-end gap-2">
+                            <button type="submit" class="btn btn-primary">Apply Filters</button>
+                            <a href="/properties" class="btn btn-outline-secondary">Reset</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <button type="submit" class="btn btn-primary btn-lg w-100">
-                        <i class="bi bi-search me-2"></i><?= lang('Property.frontend.search') ?>
-                    </button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 
     <!-- Properties Grid -->
     <?php if (empty($properties)): ?>
         <div class="text-center py-5">
-            <i class="bi bi-house-slash display-1 text-muted mb-4"></i>
-            <h3 class="text-muted"><?= lang('Property.frontend.no_properties') ?></h3>
-            <p class="text-muted"><?= lang('Property.frontend.try_different_search') ?? 'Versuchen Sie eine andere Suche' ?>
-            </p>
+            <p>No properties found that match your criteria.</p>
+            <a href="/properties" class="btn btn-secondary mt-2">Clear Filters</a>
         </div>
     <?php else: ?>
         <div class="row g-4">
-            <?php foreach ($properties as $index => $property): ?>
-                <div class="col-md-6 col-lg-4 animate-fadeInUp delay-<?= ($index % 3) + 1 ?>">
-                    <div class="property-card">
-                        <!-- Property Image -->
-                        <div class="property-image">
-                            <i class="bi bi-building"></i>
-
-                            <?php if ($property->featured): ?>
-                                <span class="property-badge badge-featured">
-                                    <i class="bi bi-star-fill me-1"></i><?= lang('Property.featured') ?>
-                                </span>
-                            <?php else: ?>
-                                <span class="property-badge badge-<?= $property->status ?>">
-                                    <?= lang('Property.status.' . $property->status) ?>
-                                </span>
-                            <?php endif; ?>
-                        </div>
-
-                        <!-- Property Body -->
-                        <div class="property-body">
-                            <h5 class="property-title"><?= esc($property->title) ?></h5>
-                            <p class="property-location">
+            <?php foreach ($properties as $property): ?>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="<?= esc($property->getMainImage()) ?>" class="card-img-top" alt="<?= esc($property->title) ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= esc($property->title) ?></h5>
+                            <p class="card-text small text-muted">
                                 <i class="bi bi-geo-alt-fill me-1"></i>
-                                <?= esc($property->city) ?>
+                                <?= esc($property->address) ?>, <?= esc($property->city) ?>
                             </p>
-
-                            <div class="property-price">
-                                <?= format_price($property->price) ?>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h4 class="text-primary mb-0">$<?= number_format($property->price) ?></h4>
+                                <span class="badge bg-light text-dark"><?= esc(ucfirst($property->type)) ?></span>
                             </div>
-
-                            <div class="property-features">
-                                <div class="feature-item">
+                            <div class="d-flex justify-content-around text-center border-top pt-2 mt-2">
+                                <div class="px-2">
                                     <i class="bi bi-door-open"></i>
-                                    <span><?= esc($property->bedrooms) ?>         <?= lang('Property.fields.bedrooms') ?></span>
+                                    <div class="small"><?= esc($property->bedrooms) ?> Beds</div>
                                 </div>
-                                <div class="feature-item">
+                                <div class="px-2">
                                     <i class="bi bi-droplet"></i>
-                                    <span><?= esc($property->bathrooms) ?>         <?= lang('Property.fields.bathrooms') ?></span>
+                                    <div class="small"><?= esc($property->bathrooms) ?> Baths</div>
                                 </div>
-                                <div class="feature-item">
+                                <div class="px-2">
                                     <i class="bi bi-arrows-fullscreen"></i>
-                                    <span><?= esc($property->area_sqm) ?> m²</span>
+                                    <div class="small"><?= esc($property->area_sqm) ?> sqm</div>
                                 </div>
                             </div>
-
-                            <a href="/properties/<?= esc($property->slug) ?>" class="btn btn-primary w-100 mt-3">
-                                <i class="bi bi-eye me-2"></i><?= lang('Property.frontend.view_details') ?>
-                            </a>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 p-3">
+                             <a href="/properties/<?= esc($property->slug) ?>" class="btn btn-primary w-100">Schedule a Viewing</a>
                         </div>
                     </div>
                 </div>
@@ -129,11 +143,10 @@
         </div>
 
         <!-- Pagination -->
-        <?php if (isset($pager)): ?>
-            <?= view('components/pagination', [
-                'pager' => $pager,
-                'wrapperClass' => 'd-flex justify-content-center mt-5',
-            ]) ?>
+        <?php if (isset($pager) && $pager->getPageCount() > 1): ?>
+             <div class="mt-5">
+                <?= $pager->links() ?>
+             </div>
         <?php endif; ?>
     <?php endif; ?>
 </div>

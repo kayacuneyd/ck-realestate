@@ -1,0 +1,37 @@
+/*
+ * Core custom styles
+ */
+
+:root {
+  --bs-primary: #2563eb;
+  --bs-secondary: #0f172a;
+  --bs-light: #f5f7fb;
+  --bs-body-bg: #f5f7fb;
+  --bs-body-color: #0f172a;
+}
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+.btn-primary {
+    color: #fff;
+}
+
+.navbar-dark {
+    background-color: #0f172a;
+}
+
+/* Icon Stack for Trust Signals */
+.icon-stack {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.icon-stack-xl {
+    width: 5rem;
+    height: 5rem;
+    font-size: 2rem;
+}

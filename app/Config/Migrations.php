@@ -47,4 +47,20 @@ class Migrations extends BaseConfig
      * - Y_m_d_His_
      */
     public string $timestampFormat = 'Y-m-d-His_';
+
+    /**
+     * --------------------------------------------------------------------------
+     * Migrations Paths
+     * --------------------------------------------------------------------------
+     *
+     * Specify the paths where migrations can be found.
+     *
+     * @var list<string>
+     */
+    public array $paths = [
+        APPPATH . 'Database/Migrations',
+        APPPATH . 'Modules/Agent/Database/Migrations',
+        APPPATH . 'Modules/Page/Database/Migrations',
+        APPPATH . 'Modules/Property/Database/Migrations',
+    ];
 }

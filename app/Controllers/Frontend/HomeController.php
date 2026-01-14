@@ -19,6 +19,12 @@ class HomeController extends BaseController
      */
     public function index(): string
     {
-        return view('frontend/home');
+        $this->helpers[] = 'language';
+        lang('Home');
+
+        $data = [
+            'title' => lang('Home.title'),
+        ];
+        return view('frontend/home', $data);
     }
 }

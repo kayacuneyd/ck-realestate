@@ -19,6 +19,9 @@ class Autoload extends AutoloadConfig
     public $psr4 = [
         APP_NAMESPACE => APPPATH,
         'App\\Modules' => APPPATH . 'Modules',
+        'App\\Modules\\Agent' => APPPATH . 'Modules/Agent',
+        'App\\Modules\\Page' => APPPATH . 'Modules/Page',
+        'App\\Modules\\Property' => APPPATH . 'Modules/Property',
     ];
 
     /**

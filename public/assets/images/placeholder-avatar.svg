@@ -1,0 +1,6 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder avatar">
+  <rect width="300" height="300" fill="#eef2f7"/>
+  <circle cx="150" cy="120" r="50" fill="#cbd5e1"/>
+  <rect x="70" y="190" width="160" height="70" rx="35" fill="#cbd5e1"/>
+  <text x="150" y="275" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#94a3b8">300 x 300</text>
+</svg>

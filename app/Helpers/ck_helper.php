@@ -254,3 +254,26 @@ if (!function_exists('get_gravatar')) {
         return "https://www.gravatar.com/avatar/{$hash}?s={$size}&d={$default}";
     }
 }
+
+if (!function_exists('image_fallback')) {
+    /**
+     * Return a safe image URL with local placeholder fallback.
+     *
+     * @param string|null $url Image URL
+     * @param string $placeholder Placeholder URL
+     * @return string
+     */
+    function image_fallback(?string $url, string $placeholder = '/assets/images/placeholder-card.svg'): string
+    {
+        $url = trim((string) $url);
+        if ($url === '') {
+            return $placeholder;
+        }
+
+        if (str_contains($url, 'via.placeholder.com')) {
+            return $placeholder;
+        }
+
+        return $url;
+    }
+}
