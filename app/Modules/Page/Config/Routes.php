@@ -18,6 +18,10 @@ $routes = Services::routes();
 $routes->group('/', ['namespace' => 'App\Modules\Page\Controllers\Frontend'], function ($routes) {
     $routes->get('about', 'PageController::about');
     $routes->get('contact', 'PageController::contact');
+    $routes->get('how-it-works', 'PageController::howItWorks');
+    $routes->get('references', 'PageController::references');
+    $routes->get('imprint', 'PageController::imprint');
+    $routes->get('datenschutz', 'PageController::datenschutz');
     // Generic page route - can be enabled if needed
     // $routes->get('p/(:segment)', 'PageController::show/$1');
 });

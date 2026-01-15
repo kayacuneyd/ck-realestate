@@ -20,7 +20,7 @@ class BaseController extends Controller
      *
      * @var array<string>
      */
-    protected $helpers = ['url', 'html', 'form', 'ck', 'date', 'security'];
+    protected $helpers = ['url', 'html', 'form', 'ck', 'date', 'security', 'content'];
 
     /**
      * Instance of the main Request object.

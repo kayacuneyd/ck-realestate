@@ -15,13 +15,31 @@
     <div class="admin-shell">
         <aside class="admin-sidebar d-none d-lg-flex flex-column">
             <div class="sidebar-brand">
-                <a href="/admin/dashboard">CK Admin</a>
+                <a href="/admin/dashboard">Bawue Admin</a>
             </div>
             <nav class="sidebar-nav">
                 <a class="nav-link <?= active_class('admin/dashboard') ?>" href="/admin/dashboard">Dashboard</a>
                 <a class="nav-link <?= active_class('admin/properties*') ?>" href="/admin/properties">Properties</a>
-                <a class="nav-link <?= active_class('admin/agents*') ?>" href="/admin/agents">Agents</a>
+                <a class="nav-link <?= active_class('admin/messages*') ?>" href="/admin/messages">
+                    Messages
+                    <?php
+                    $messageModel = new \App\Modules\Message\Models\MessageModel();
+                    $unreadCount = $messageModel->countUnread();
+                    if ($unreadCount > 0): ?>
+                        <span class="badge bg-danger ms-1"><?= $unreadCount ?></span>
+                    <?php endif; ?>
+                </a>
+                <a class="nav-link <?= active_class('admin/content*') ?>" href="/admin/content">
+                    <i class="bi bi-pencil-square me-1"></i> Content
+                </a>
                 <a class="nav-link <?= active_class('admin/pages*') ?>" href="/admin/pages">Pages</a>
+                <hr class="my-2 opacity-25">
+                <a class="nav-link <?= active_class('admin/settings') ?>" href="/admin/settings">
+                    <i class="bi bi-gear me-1"></i> Settings
+                </a>
+                <a class="nav-link <?= active_class('admin/import-logs') ?>" href="/admin/import-logs">
+                    <i class="bi bi-cloud-download me-1"></i> Import Logs
+                </a>
             </nav>
             <div class="sidebar-footer mt-auto">
                 <a class="btn btn-outline-secondary w-100" href="/logout">Logout</a>
@@ -51,14 +69,19 @@
     <div class="offcanvas offcanvas-start admin-offcanvas" tabindex="-1" id="adminOffcanvas"
         aria-labelledby="adminOffcanvasLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="adminOffcanvasLabel">CK Admin</h5>
+            <h5 class="offcanvas-title" id="adminOffcanvasLabel">Bawue Admin</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <nav class="sidebar-nav">
                 <a class="nav-link <?= active_class('admin/dashboard') ?>" href="/admin/dashboard">Dashboard</a>
                 <a class="nav-link <?= active_class('admin/properties*') ?>" href="/admin/properties">Properties</a>
-                <a class="nav-link <?= active_class('admin/agents*') ?>" href="/admin/agents">Agents</a>
+                <a class="nav-link <?= active_class('admin/messages*') ?>" href="/admin/messages">
+                    Messages
+                    <?php if (isset($unreadCount) && $unreadCount > 0): ?>
+                        <span class="badge bg-danger ms-1"><?= $unreadCount ?></span>
+                    <?php endif; ?>
+                </a>
                 <a class="nav-link <?= active_class('admin/pages*') ?>" href="/admin/pages">Pages</a>
                 <a class="nav-link mt-3" href="/logout">Logout</a>
             </nav>

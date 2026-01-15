@@ -1,11 +1,11 @@
 :root {
     --main-bg-color: #fff;
-    --main-text-color: #555;
-    --dark-text-color: #222;
-    --light-text-color: #c7c7c7;
-    --brand-primary-color: #DC4814;
-    --light-bg-color: #ededee;
-    --dark-bg-color: #404040;
+    --main-text-color: #000;
+    --dark-text-color: #000;
+    --light-text-color: #f8f9fa;
+    --brand-primary-color: #004aad;
+    --light-bg-color: #f8f9fa;
+    --dark-bg-color: #000;
 }
 
 body {
@@ -76,7 +76,7 @@ p.lead {
 }
 
 .source {
-    background: #343434;
+    background: #000;
     color: var(--light-text-color);
     padding: 0.5em 1em;
     border-radius: 5px;
@@ -89,7 +89,7 @@ p.lead {
     line-height: 1.4;
 }
 .source span.line .number {
-    color: #666;
+    color: rgba(217, 217, 217, 0.7);
 }
 .source .line .highlight {
     display: block;
@@ -147,10 +147,10 @@ p.lead {
     display: block;
     text-align: center;
     line-height: 3.0;
-    background: #d9edf7;
-    border: 1px solid #bcdff1;
+    background: #f8f9fa;
+    border: 1px solid #f8f9fa;
     border-radius: 5px;
-    color: #31708f;
+    color: #000;
 }
 
 table {
@@ -159,14 +159,14 @@ table {
 }
 th {
     text-align: left;
-    border-bottom: 1px solid #e7e7e7;
+    border-bottom: 1px solid #f8f9fa;
     padding-bottom: 0.5rem;
 }
 td {
     padding: 0.2rem 0.5rem 0.2rem 0;
 }
 tr:hover td {
-    background: #f1f1f1;
+    background: #f8f9fa;
 }
 td pre {
     white-space: pre-wrap;

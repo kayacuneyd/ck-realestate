@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\UserModel;
-use App\Modules\Agent\Models\AgentModel;
 use App\Modules\Page\Models\PageModel;
 use App\Modules\Property\Models\PropertyModel;
 
@@ -24,7 +23,6 @@ class DashboardController extends BaseController
     public function index(): string
     {
         $propertyModel = new PropertyModel();
-        $agentModel = new AgentModel();
         $pageModel = new PageModel();
         $userModel = new UserModel();
 
@@ -35,11 +33,6 @@ class DashboardController extends BaseController
                     'label' => 'Properties',
                     'value' => $propertyModel->countAllResults(),
                     'trend' => 'Active listings in the system',
-                ],
-                [
-                    'label' => 'Agents',
-                    'value' => $agentModel->countAllResults(),
-                    'trend' => 'Team members available',
                 ],
                 [
                     'label' => 'Pages',
@@ -53,9 +46,9 @@ class DashboardController extends BaseController
                 ],
             ],
             'recentProperties' => $propertyModel->orderBy('created_at', 'DESC')->findAll(5),
-            'recentAgents' => $agentModel->orderBy('created_at', 'DESC')->findAll(5),
         ];
 
         return view('admin/dashboard', $data);
     }
 }
+

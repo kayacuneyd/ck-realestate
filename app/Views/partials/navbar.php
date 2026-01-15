@@ -5,12 +5,17 @@ $brandUrl = $brandUrl ?? '/';
 $navItems = $navItems ?? [];
 $cta_link = $cta_link ?? null;
 $cta_text = $cta_text ?? '';
+$logo = $logo ?? null;
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="<?= esc($brandUrl) ?>">
-            <?= esc($brand) ?>
+            <?php if ($logo): ?>
+                <img src="<?= esc($logo) ?>" alt="<?= esc($brand) ?>" style="max-height: 40px;">
+            <?php else: ?>
+                <?= esc($brand) ?>
+            <?php endif; ?>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>

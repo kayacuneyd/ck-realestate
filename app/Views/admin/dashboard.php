@@ -22,7 +22,7 @@
 </div>
 
 <div class="row g-4">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="card admin-card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Recent Properties</span>
@@ -40,33 +40,6 @@
                                     <div class="text-muted small"><?= esc($property->city) ?></div>
                                 </div>
                                 <a href="/admin/properties/<?= esc($property->id) ?>" class="btn btn-sm btn-outline-secondary">
-                                    View
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="card admin-card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <span>Recent Agents</span>
-                <a href="/admin/agents" class="text-decoration-none">View all</a>
-            </div>
-            <div class="card-body">
-                <?php if (empty($recentAgents)): ?>
-                    <p class="text-muted mb-0">No agents yet.</p>
-                <?php else: ?>
-                    <ul class="list-group list-group-flush">
-                        <?php foreach ($recentAgents as $agent): ?>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <div>
-                                    <strong><?= esc($agent->name) ?></strong>
-                                    <div class="text-muted small"><?= esc($agent->email) ?></div>
-                                </div>
-                                <a href="/admin/agents/<?= esc($agent->id) ?>" class="btn btn-sm btn-outline-secondary">
                                     View
                                 </a>
                             </li>

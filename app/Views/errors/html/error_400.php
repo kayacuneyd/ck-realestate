@@ -17,9 +17,9 @@
         }
         body {
             height: 100%;
-            background: #fafafa;
+            background: #f8f9fa;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            color: #777;
+            color: #000;
             font-weight: 300;
         }
         h1 {
@@ -28,7 +28,7 @@
             font-size: 3rem;
             margin-top: 0;
             margin-bottom: 0;
-            color: #222;
+            color: #000;
         }
         .wrap {
             max-width: 1024px;
@@ -36,7 +36,7 @@
             padding: 2rem;
             background: #fff;
             text-align: center;
-            border: 1px solid #efefef;
+            border: 1px solid #f8f9fa;
             border-radius: 0.5rem;
             position: relative;
         }
@@ -45,8 +45,8 @@
             margin-top: 1.5rem;
         }
         code {
-            background: #fafafa;
-            border: 1px solid #efefef;
+            background: #f8f9fa;
+            border: 1px solid #f8f9fa;
             padding: 0.5rem 1rem;
             border-radius: 5px;
             display: block;
@@ -56,15 +56,15 @@
         }
         .footer {
             margin-top: 2rem;
-            border-top: 1px solid #efefef;
+            border-top: 1px solid #f8f9fa;
             padding: 1em 2em 0 2em;
             font-size: 85%;
-            color: #999;
+            color: rgba(0, 0, 0, 0.6);
         }
         a:active,
         a:link,
         a:visited {
-            color: #dd4814;
+            color: #004aad;
         }
     </style>
 </head>

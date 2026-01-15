@@ -37,11 +37,14 @@
                         <label for="status" class="form-label"><?= lang('Property.fields.status') ?> *</label>
                         <select class="form-select" id="status" name="status" required>
                             <option value="available" <?= old('status') === 'available' ? 'selected' : '' ?>>
-                                <?= lang('Property.status.available') ?></option>
+                                <?= lang('Property.status.available') ?>
+                            </option>
                             <option value="reserved" <?= old('status') === 'reserved' ? 'selected' : '' ?>>
-                                <?= lang('Property.status.reserved') ?></option>
+                                <?= lang('Property.status.reserved') ?>
+                            </option>
                             <option value="sold" <?= old('status') === 'sold' ? 'selected' : '' ?>>
-                                <?= lang('Property.status.sold') ?></option>
+                                <?= lang('Property.status.sold') ?>
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -110,6 +113,24 @@
                 </div>
             </div>
 
+            <hr class="my-4">
+
+            <!-- Property Images -->
+            <div class="mb-4">
+                <label class="form-label"><i class="bi bi-images me-1"></i> Property Images</label>
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <input type="file" class="form-control" id="imageUpload" accept="image/*" multiple>
+                            <div class="form-text">Select one or more images. Supported formats: JPG, PNG, WebP (Max 2MB
+                                each)</div>
+                        </div>
+                        <div id="imagePreview" class="row g-2 mb-3"></div>
+                        <input type="hidden" name="images" id="imagesData" value="<?= old('images', '[]') ?>">
+                    </div>
+                </div>
+            </div>
+
             <div class="mb-4">
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="featured" name="featured" value="1"
@@ -128,4 +149,68 @@
     </div>
 </div>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagesData = document.getElementById('imagesData');
+
+        let uploadedImages = [];
+
+        imageUpload.addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+
+            files.forEach(file => {
+                if (file.size > 2 * 1024 * 1024) {
+                    alert('File ' + file.name + ' is too large. Max size is 2MB.');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const base64 = e.target.result;
+                    uploadedImages.push(base64);
+                    updatePreview();
+                    updateHiddenField();
+                };
+                reader.readAsDataURL(file);
+            });
+
+            imageUpload.value = '';
+        });
+
+        function updatePreview() {
+            imagePreview.innerHTML = '';
+            uploadedImages.forEach((img, index) => {
+                const col = document.createElement('div');
+                col.className = 'col-auto position-relative';
+                col.innerHTML = `
+                <img src="${img}" alt="Preview" class="rounded" style="height: 100px; width: 100px; object-fit: cover;">
+                <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 remove-image"
+                        style="width: 24px; height: 24px; padding: 0; line-height: 1;"
+                        data-index="${index}">
+                    <i class="bi bi-x"></i>
+                </button>
+            `;
+                imagePreview.appendChild(col);
+            });
+
+            document.querySelectorAll('.remove-image').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const index = parseInt(this.dataset.index);
+                    uploadedImages.splice(index, 1);
+                    updatePreview();
+                    updateHiddenField();
+                });
+            });
+        }
+
+        function updateHiddenField() {
+            imagesData.value = JSON.stringify(uploadedImages);
+        }
+    });
+</script>
 <?= $this->endSection() ?>

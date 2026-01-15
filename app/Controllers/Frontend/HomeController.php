@@ -22,8 +22,13 @@ class HomeController extends BaseController
         $this->helpers[] = 'language';
         lang('Home');
 
+        // Fetch featured properties
+        $propertyModel = new \App\Modules\Property\Models\PropertyModel();
+        $featuredProperties = $propertyModel->getFeatured(3);
+
         $data = [
             'title' => lang('Home.title'),
+            'featuredProperties' => $featuredProperties,
         ];
         return view('frontend/home', $data);
     }

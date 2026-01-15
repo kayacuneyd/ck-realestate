@@ -64,4 +64,60 @@ class PageController extends BaseController
 
         return view('App\Modules\Page\Views\frontend\contact', $data);
     }
+
+    /**
+     * Display the How It Works page.
+     * @return string
+     */
+    public function howItWorks(): string
+    {
+        $data = [
+            'title' => 'Wie es funktioniert',
+        ];
+
+        return view('App\Modules\Page\Views\frontend\how-it-works', $data);
+    }
+
+    /**
+     * Display the References page.
+     * @return string
+     */
+    public function references(): string
+    {
+        $sponsorModel = new \App\Models\SponsorModel();
+        $sponsors = $sponsorModel->orderBy('sort_order', 'ASC')->findAll();
+
+        $data = [
+            'title' => 'Referenzen',
+            'sponsors' => $sponsors,
+        ];
+
+        return view('App\Modules\Page\Views\frontend\references', $data);
+    }
+
+    /**
+     * Display the Imprint page.
+     * @return string
+     */
+    public function imprint(): string
+    {
+        $data = [
+            'title' => 'Impressum',
+        ];
+
+        return view('App\Modules\Page\Views\frontend\imprint', $data);
+    }
+
+    /**
+     * Display the Privacy Policy page.
+     * @return string
+     */
+    public function datenschutz(): string
+    {
+        $data = [
+            'title' => 'Datenschutzerklärung',
+        ];
+
+        return view('App\Modules\Page\Views\frontend\datenschutz', $data);
+    }
 }

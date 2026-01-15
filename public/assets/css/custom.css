@@ -3,11 +3,16 @@
  */
 
 :root {
-  --bs-primary: #2563eb;
-  --bs-secondary: #0f172a;
-  --bs-light: #f5f7fb;
-  --bs-body-bg: #f5f7fb;
-  --bs-body-color: #0f172a;
+  --bs-primary: #004aad;
+  --bs-secondary: #000000;
+  --bs-light: #f8f9fa;
+  --bs-body-bg: #f8f9fa;
+  --bs-body-color: #000000;
+  --bs-secondary-color: rgba(0, 0, 0, 0.6);
+  --bs-tertiary-color: rgba(0, 0, 0, 0.5);
+  --bs-border-color: #f8f9fa;
+  --bs-link-color: #004aad;
+  --bs-link-hover-color: rgba(0, 74, 173, 0.85);
 }
 
 body {
@@ -19,7 +24,7 @@ body {
 }
 
 .navbar-dark {
-    background-color: #0f172a;
+    background-color: #000000;
 }
 
 /* Icon Stack for Trust Signals */
